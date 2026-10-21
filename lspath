@@ -1,0 +1,26 @@
+#!/usr/bin/env lua
+
+local path_env = os.getenv("PATH")
+
+local function print_table_line(str)
+	local line = string.format("│ %s\r\x1b[78C│", str)
+	print(line)
+end
+
+if path_env then
+	local top = "\n" .. "┌ PATH " .. string.rep("─", 71) .. "┐"
+	print(top)
+
+	print_table_line("")
+
+	for path in string.gmatch(path_env, "[^:]+") do
+		print_table_line(path)
+	end
+
+	local btm = "└" .. string.rep("─", 77) .. "┘"
+	print(btm)
+else
+	print("\x1b[31mError: PATH does not exist.\x1b[0m")
+	os.exit(1)
+end
+
